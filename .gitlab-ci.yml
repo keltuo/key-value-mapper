@@ -35,6 +35,8 @@ test:php7:
 deploy:
   stage: deploy
   image: docker:stable
+  before_script:
+      - apk add --update curl && rm -rf /var/cache/apk/*
   script:
-    - 'curl --header "Job-Token: $CI_JOB_TOKEN" --data tag=latest "https://gitlab.adfinance.cz/api/v4/projects/$CI_PROJECT_ID/packages/composer"'
+      - 'curl --header "Job-Token: $CI_JOB_TOKEN" --data tag=latest "https://gitlab.adfinance.cz/api/v4/projects/$CI_PROJECT_ID/packages/composer"'
 
