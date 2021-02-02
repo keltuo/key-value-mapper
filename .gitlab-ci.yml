@@ -34,6 +34,7 @@ test:php7:
 
 deploy:
   stage: deploy
+  image: docker:stable
   script:
     - 'curl --header "Job-Token: $CI_JOB_TOKEN" --data tag=latest "https://gitlab.adfinance.cz/api/v4/projects/$CI_PROJECT_ID/packages/composer"'
 
