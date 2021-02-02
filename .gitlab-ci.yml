@@ -1,0 +1,24 @@
+image: php:7.4-cli
+
+cache:
+  paths:
+    - vendor/
+
+before_script:
+    - apt-get update -yqq
+    - apt-get install git -yqq
+    # Install Xdebug
+    - pecl install xdebug
+    - docker-php-ext-enable xdebug
+    # Install composer
+    - curl -sS https://getcomposer.org/installer | php
+    - php composer.phar install
+
+# Run our tests
+test:
+    only:
+        - main
+    script:
+        - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
+    tags:
+        - docker
