@@ -27,6 +27,6 @@ test:php7:
         - main
     script:
         - pwd
-        - php -dxdebug.mode=coverage /var/www/vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
+        - php -dxdebug.mode=coverage vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
     tags:
         - docker
