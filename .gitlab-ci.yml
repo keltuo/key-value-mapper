@@ -1,18 +1,13 @@
-include:
-  - project: 'top-pojisteni/templates'
-    file: '/definitions/.Composer.gitlab-ci.yml'
-
 stages:
     - prepare
     - test
-
 
 cache:
   paths:
     - vendor
 
 composer:
-  <<: *composer_definition
+  image: composer
   stage: prepare
   script:
     - composer install --optimize-autoloader --prefer-dist --no-progress
