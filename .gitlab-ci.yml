@@ -26,6 +26,7 @@ test:php7:
     only:
         - main
     script:
-        - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
+        - pwd
+        - php -dxdebug.mode=coverage /var/www/vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
     tags:
         - docker
