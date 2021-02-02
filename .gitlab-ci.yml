@@ -16,7 +16,7 @@ test:php7:
     stage: test
     image: php:7.4-cli
     dependencies:
-        - prepare
+        - composer
     before_script:
         - apt-get update -yqq
         - apt-get install -yqq git 
