@@ -41,7 +41,7 @@ deploy:
   before_script:
       - apk add --update curl && rm -rf /var/cache/apk/*
   script:
-      - 'curl --header "Job-Token: $CI_JOB_TOKEN" --data tag=latest "https://gitlab.adfinance.cz/api/v4/projects/$CI_PROJECT_ID/packages/composer"'
+      - 'curl --header "Job-Token: $CI_JOB_TOKEN" --data tag=$PACKAGE_VERSION "https://gitlab.adfinance.cz/api/v4/projects/$CI_PROJECT_ID/packages/composer"'
   only:
     - main
 
