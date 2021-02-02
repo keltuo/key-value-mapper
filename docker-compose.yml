@@ -1,0 +1,15 @@
+version: "3"
+services:
+  php:
+    container_name: abstract-mapper
+    image: keltuo/php7-cli
+    build:
+      context: .
+    volumes:
+      - ./:/var/www/
+  composer:
+    container_name: composer-abstract-mapper
+    image: composer
+    volumes:
+      - ./:/app
+    command: bash -c "composer install --optimize-autoloader --prefer-dist --no-progress"
