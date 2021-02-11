@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace KeyValueMapper;
 
 use InvalidArgumentException;
+use KeyValueMapper\Exception\MatchFoundException;
 
 /**
  * Class AbstractCollection
@@ -24,28 +25,24 @@ abstract class AbstractCollection implements MapperInterface
 
     /**
      * AbstractCollection constructor.
-     * @param array<string|number|array|bool> $dataset
      * @param array $collections
      */
-    public function __construct(array $dataset = [], array $collections = [])
+    public function __construct(array $collections = [])
     {
-        $this->setData($dataset);
         $this->collections = $collections;
     }
 
     /**
      * @param string $key
-     * @param string|null $default
+     * @param string|null|array $default
      * @param bool $mapBySourceKey
      * @return array<array|bool|number|string|null>|bool|number|string|null
      */
-    public function getValueByKey(string $key, string $default = null, bool $mapBySourceKey = true)
+    public function getValueByKey(string $key, $default = null, bool $mapBySourceKey = true)
     {
         $value = $default;
-        if (array_key_exists($key, $this->getMap(!$mapBySourceKey))) {
-            $value = $this->getMap(!$mapBySourceKey)[$key];
-        }
-
+        $dataSource = $this->getMap(!$mapBySourceKey);
+        $this->getKeyFromArray($dataSource, !$mapBySourceKey, $key, $value);
         return $value;
     }
 
@@ -57,15 +54,9 @@ abstract class AbstractCollection implements MapperInterface
     public function getMappedKey(string $key, bool $mapBySourceKey = true)
     {
         $dataSource = $this->getMapDataSource();
-        if ($mapBySourceKey && array_key_exists($key, $dataSource)) {
-            $key = $this->getMapDataSource()[$key];
-        } else if (!$mapBySourceKey) {
-            $searchedKey = array_search($key, $dataSource);
-            if(!empty($searchedKey)) {
-                $key = $searchedKey;
-            }
-        }
-        return $key;
+        $returnKey = $key;
+        $this->getKeyFromArray($dataSource, $mapBySourceKey, $key, $returnKey);
+        return $returnKey;
     }
 
     /**
@@ -79,7 +70,6 @@ abstract class AbstractCollection implements MapperInterface
                 $outputMap = [];
                 if (is_array($collectionValue)) {
                     $outputMap[$collectionKey] = $this->getDataSourceMapFromArrayCollection($collectionValue);
-                    $this->outputMap = array_merge($this->outputMap, $outputMap);
                 } else {
                     $outputMapData = $collectionValue->getMapDataSource();
                     if (is_string($collectionKey)) {
@@ -87,8 +77,8 @@ abstract class AbstractCollection implements MapperInterface
                     } else {
                         $outputMap = $outputMapData;
                     }
-                    $this->mapDataSource = array_merge($this->mapDataSource, $outputMap);
                 }
+                $this->mapDataSource = array_merge($this->mapDataSource, $outputMap);
             }
         }
         return $this->mapDataSource;
@@ -287,6 +277,40 @@ abstract class AbstractCollection implements MapperInterface
             }
         }
         return $output;
+    }
+
+    /**
+     * @param array $dataSource
+     * @param bool $mapBySourceKey
+     * @param mixed $key
+     * @param mixed $returnKey
+     */
+    protected function getKeyFromArray(array &$dataSource, bool $mapBySourceKey, $key,  &$returnKey): void
+    {
+        if(array_key_exists($key, $dataSource)) {
+            $returnKey = $dataSource[$key];
+        } else {
+            try {
+                array_walk_recursive(
+                    $dataSource,
+                    function ($dataSourceItem, $dataSourceKey) use ($mapBySourceKey, $key, &$returnKey) {
+                        if ($mapBySourceKey && $dataSourceKey == $key) {
+                            $returnKey = $dataSourceItem;
+                            throw new MatchFoundException('I found him');
+                        } else if (
+                            !$mapBySourceKey
+                            && $dataSourceItem == $key
+                        ) {
+                            $returnKey = $dataSourceKey;
+                            throw new MatchFoundException('I found him');
+                        }
+                    },
+                    $returnKey
+                );
+            } catch (MatchFoundException $exception) {
+                $a = $returnKey;
+            }
+        }
     }
 
 }
