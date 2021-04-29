@@ -6,6 +6,8 @@ namespace KeyValueMapper\Example\Collection;
 use KeyValueMapper\AbstractCollection;
 use KeyValueMapper\Example\Model\Owner;
 use KeyValueMapper\Example\Model\CalculationData as MapperCalculationData;
+use KeyValueMapper\Example\Model\ReplaceAttribute;
+use KeyValueMapper\KeyValueArrayInterface;
 
 /**
  * Class CalculationData
@@ -19,7 +21,8 @@ class CalculationData extends AbstractCollection
      */
     public function getMap(bool $mapBySourceKey = true): array
     {
-        $this->addCollection(new MapperCalculationData($this->data));
+        $calculationData = new MapperCalculationData($this->data);
+        $this->addCollection($calculationData);
 
         if (!$mapBySourceKey) {
             $this->addCollection(new Owner((array)$this->data));
@@ -28,6 +31,17 @@ class CalculationData extends AbstractCollection
         if (isset($this->data['owner'])) {
             $this->addCollection(new Owner((array)$this->data['owner']));
         }
+
+        $this->addArrayCollection(
+            $calculationData,
+            ReplaceAttribute::class,
+            'replace',
+            $mapBySourceKey,
+            function(KeyValueArrayInterface $class) use ($mapBySourceKey) {
+                $class->setEnabled($mapBySourceKey);
+                return $class;
+            }
+        );
 
         return parent::getMap($mapBySourceKey);
     }

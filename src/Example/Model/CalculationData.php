@@ -42,6 +42,7 @@ class CalculationData extends AbstractMapper
         'payment_frequency' => 'payment',
         'insurance_type' => 'insurance',
         'insurance_date_start' => 'ins_start_date',
+        'replace' => 'substitution_data'
     ];
     /**
      * Field calculation_type has mapped Enum values

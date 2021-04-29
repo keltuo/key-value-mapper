@@ -184,25 +184,34 @@ abstract class AbstractCollection implements MapperInterface
     }
 
     /**
-     * @param  AbstractMapper  $mapper
+     * @param AbstractMapper $mapper
      * @param $collectionClassName
-     * @param  string  $mappedKey
-     * @param  bool  $byMapKey
+     * @param string $mappedKey
+     * @param bool $byMapKey
+     * @param \Closure|null $classCallback
      * @return AbstractCollection
      */
     public function addArrayCollection(
         AbstractMapper $mapper,
         $collectionClassName,
         string $mappedKey,
-        bool $byMapKey = true
+        bool $byMapKey = true,
+        \Closure $classCallback = null
     ): AbstractCollection
     {
         $sourceKey = $mapper->getSourceKey($mappedKey, $byMapKey);
         $targetKey = $mapper->getTargetKey($mappedKey, $byMapKey);
         if (isset($this->data[$sourceKey])) {
-            foreach ($this->data[$sourceKey] as $itemsListData) {
+            foreach ($this->data[$sourceKey] as $key => $itemsListData) {
                 $class = $this->createCollectionFromClassName($collectionClassName);
-                $this->addCollection($class->setData((array)$itemsListData), $targetKey);
+                if (!is_null($classCallback)) {
+                    $class = $classCallback($class);
+                }
+                $itemsListDataArray = is_array($itemsListData) ? $itemsListData : [];
+                if (!is_numeric($key)) {
+                    $itemsListDataArray[$key] = $itemsListData;
+                }
+                $this->addCollection($class->setData((array)$itemsListDataArray), $targetKey);
             }
             unset($this->data[$sourceKey]);
         }
@@ -256,7 +265,11 @@ abstract class AbstractCollection implements MapperInterface
             if (is_array($subCollection)) {
                 $output[$keySubCollection][] = $this->getMapFromArrayCollection($subCollection, $byMapKey);
             } else {
-                $output[$keySubCollection] = $subCollection->getMap($byMapKey);
+                if ($subCollection instanceof KeyValueArrayInterface && $subCollection->isEnabled()) {
+                    $output[$subCollection->getKeyToArray()] = $subCollection->getValueToArray();
+                } else {
+                    $output[$keySubCollection] = $subCollection->getMap($byMapKey);
+                }
             }
         }
         return $output;

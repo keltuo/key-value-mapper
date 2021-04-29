@@ -47,6 +47,10 @@ class BaseTestCase extends TestCase
                 'street' => 'street value',
                 'street_number' => 'street_number value',
                 'zip' => 'zip value',
+            ],
+            'replace' => [
+                ['name' => 'key_name', 'value' => 'key value'],
+                ['name' => 'key_name1', 'value' => 'key value 1'],
             ]
         ];
         $this->defaultExpectedMapSource = [
@@ -66,6 +70,10 @@ class BaseTestCase extends TestCase
             'owner_street' => 'street value',
             'owner_street_nr' => 'street_number value',
             'owner_zip' => 'zip value',
+            'substitution_data' => [
+                'key_name' => 'key value',
+                'key_name1' => 'key value 1',
+            ]
         ];
 
         /** Default Target keys */
@@ -86,6 +94,10 @@ class BaseTestCase extends TestCase
             'owner_street' => 'owner_street value',
             'owner_street_nr' => 'owner_street_nr value',
             'owner_zip' => 'owner_zip value',
+            'substitution_data' => [
+                'key_name' => 'key value',
+                'key_name1' => 'key value 1',
+            ],
         ];
         $this->defaultExpectedMapTarget = [
             'insurance_company' => 'ins value',
@@ -104,6 +116,10 @@ class BaseTestCase extends TestCase
             'street' => 'owner_street value',
             'street_number' => 'owner_street_nr value',
             'zip' => 'owner_zip value',
+            'replace' => [
+                ['name' => 'key_name', 'value' => 'key value'],
+                ['name' => 'key_name1', 'value' => 'key value 1'],
+            ],
         ];
     }
 }
