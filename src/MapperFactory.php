@@ -21,7 +21,7 @@ class MapperFactory
     {
         switch ($method) {
             case self::CALCULATION_DATA:
-                return new CalculationData($dataset);
+                return (new CalculationData())->setData($dataset);
             default:
                 throw new \InvalidArgumentException('Mapper is not implemented!');
         }

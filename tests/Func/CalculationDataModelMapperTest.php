@@ -22,7 +22,7 @@ class CalculationDataModelMapperTest extends BaseTestCase
             'calculation_type' => 'calculation_type value',
             'payment_frequency' => 'payment_frequency value',
             'insurance_type' => 'type1',
-            'insurance_date_start' => '2021-01-21',
+            'insurance_date_start' => '2021-01-21'
         ];
         $this->defaultExpectedMapSource = [
             'ins' => 'insurance_company value',
