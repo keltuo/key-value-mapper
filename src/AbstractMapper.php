@@ -12,6 +12,10 @@ use function Symfony\Component\String\u;
 abstract class AbstractMapper implements MapperInterface
 {
     /**
+     * @var string
+     */
+    protected string $customFormatDatetime = 'Y-m-d H:i:s';
+    /**
      * @var array<string|number|bool|array>
      */
     protected array $data = [];
@@ -248,14 +252,31 @@ abstract class AbstractMapper implements MapperInterface
                 return (int)strtotime($value);
             case MapperInterface::TYPE_DATE:
             case MapperInterface::TYPE_DATETIME:
+            case MapperInterface::TYPE_CUSTOM_DATETIME:
                 if (!is_numeric($value)) $value = strtotime($value);
                 return (new \DateTime())
                     ->setTimestamp((int)$value)
-                    ->format(($type === MapperInterface::TYPE_DATETIME ? DATE_RFC3339 : 'Y-m-d'));
+                    ->format($this->getDatetimeFormat($type));
             case MapperInterface::TYPE_NUMBER:
                 return intval($value);
             default:
                 return sprintf("%s", $value);
+        }
+    }
+
+    /**
+     * @param $type
+     * @return string
+     */
+    protected function getDatetimeFormat($type): string
+    {
+        switch ($type) {
+            case MapperInterface::TYPE_CUSTOM_DATETIME:
+                return $this->customFormatDatetime;
+            case MapperInterface::TYPE_DATETIME:
+                return DATE_RFC3339;
+            default:
+                return 'Y-m-d';
         }
     }
 }
