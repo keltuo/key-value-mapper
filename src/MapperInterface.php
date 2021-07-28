@@ -16,6 +16,7 @@ interface MapperInterface
     const TYPE_TIMESTAMP = 'timestamp';
     const TYPE_DATETIME = 'datetime';
     const TYPE_DATE = 'date';
+    const TYPE_CUSTOM_DATETIME = 'custom-datetime';
     /**
      * @param bool $mapBySourceKey
      * @return array<string|int|array|bool>
