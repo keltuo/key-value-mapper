@@ -243,7 +243,7 @@ abstract class AbstractMapper implements MapperInterface
     /**
      * @param string $value
      * @param string $type
-     * @return false|number|string
+     * @return false|number|string|null
      */
     protected function escapeValue(string $value, string $type = MapperInterface::TYPE_STRING)
     {
@@ -253,6 +253,7 @@ abstract class AbstractMapper implements MapperInterface
             case MapperInterface::TYPE_DATE:
             case MapperInterface::TYPE_DATETIME:
             case MapperInterface::TYPE_CUSTOM_DATETIME:
+                if (empty($value)) return null;
                 if (!is_numeric($value)) $value = strtotime($value);
                 return (new \DateTime())
                     ->setTimestamp((int)$value)
