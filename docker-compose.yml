@@ -5,6 +5,7 @@ services:
     image: keltuo/php7-cli
     build:
       context: .
+    command: bash -c "php /var/www/vendor/phpunit/phpunit/phpunit --configuration /var/www/phpunit.xml --migrate-configuration"
     volumes:
       - ./:/var/www/
   composer:

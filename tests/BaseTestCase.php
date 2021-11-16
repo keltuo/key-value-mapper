@@ -25,7 +25,7 @@ class BaseTestCase extends TestCase
     /** @var array  */
     protected array $defaultExpectedMapTarget = [];
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         /** Default Source keys */

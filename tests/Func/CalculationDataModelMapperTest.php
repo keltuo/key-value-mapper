@@ -14,7 +14,7 @@ use KeyValueMapper\Tests\BaseTestCase;
 class CalculationDataModelMapperTest extends BaseTestCase
 {
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->sourceData = [

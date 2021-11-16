@@ -18,7 +18,7 @@ class AbstractMapperTest extends TestCase
      */
     protected AbstractMapper $mapper;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mapper = $this->getMockForAbstractClass(
             '\KeyValueMapper\AbstractMapper',

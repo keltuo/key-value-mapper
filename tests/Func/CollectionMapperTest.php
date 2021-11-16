@@ -14,7 +14,7 @@ use KeyValueMapper\Tests\BaseTestCase;
 class CollectionMapperTest extends BaseTestCase
 {
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->mapperFromSource = MapperFactory::createMapperCollection(
