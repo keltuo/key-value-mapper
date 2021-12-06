@@ -30,7 +30,7 @@ abstract class AbstractCollection implements MapperInterface
 
     public function getValueByKey(
         string $key,
-        string|array|null $default = null,
+        array|bool|int|float|string|null $default = null,
         bool $mapBySourceKey = true,
     ): array|bool|int|float|string|null
     {

@@ -73,7 +73,7 @@ abstract class AbstractMapper implements MapperInterface
 
     public function getValueByKey(
         string $key,
-        ?string $default = null,
+        array|bool|int|float|string|null $default = null,
         bool $mapBySourceKey = true,
     ): array|bool|int|float|string|null
     {
