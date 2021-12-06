@@ -3,35 +3,35 @@ declare(strict_types=1);
 
 namespace KeyValueMapper\Example\Model;
 
-
 use KeyValueMapper\AbstractMapper;
 use KeyValueMapper\MapperInterface;
 
 /**
  * Class Owner
+ *
  * @package KeyValueMapper\Example\Model
  */
 class Owner extends AbstractMapper
 {
     /**
      * Field "owner_dob" as Output key must be in Timestamp format
-     * @var string
      */
     protected string $owner_dob = MapperInterface::TYPE_TIMESTAMP;
+
     /**
      * Field "date_of_birth" as Input key must be in Date format
-     * @var string
      */
     protected string $date_of_birth = MapperInterface::TYPE_DATE;
+
     /**
      * Field "owner_zip" as Output key must be in String format
-     * @var string
      */
     protected string $owner_zip = MapperInterface::TYPE_STRING;
 
     /**
-     * Array Map  input key => output key
-     * @var array|string[]
+     * Array Map input key => output key
+     *
+     * @var array<string>
      */
     protected array $map = [
         'subject' => 'owner_kind',
@@ -46,9 +46,11 @@ class Owner extends AbstractMapper
         'street_number' => 'owner_street_nr',
         'zip' => 'owner_zip',
     ];
+
     /**
      * Field subject has mapped Enum values
-     * @var array|int[]
+     *
+     * @var array<int>
      */
     protected array $mapSubject = [
         'PERSON' => 1,

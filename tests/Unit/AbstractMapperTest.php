@@ -76,7 +76,7 @@ class AbstractMapperTest extends TestCase
             'sourceKey' => 'targetKey',
             'sourceKeyDefault' => 'targetKeyDefault'
         ]);
-        $mapper->defaultValues = ['sourceKeyDefault' => 'default value'];
+        $mapper->setDefaultValues(['sourceKeyDefault' => 'default value']);
 
         $this->assertEquals(
             [

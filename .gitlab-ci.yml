@@ -17,9 +17,9 @@ composer:
     - tags
 
 
-test:php7:
+test:php8:
     stage: test
-    image: php:7.4-cli
+    image: keltuo/php:8-cli
     dependencies:
         - composer
     before_script:

@@ -107,7 +107,7 @@ class OwnerModelMapperTest extends BaseTestCase
     public function testEscapeValues()
     {
         $this->assertEquals(
-            1611187200,
+            1611183600,
             $this->mapperFromSource->getValueByKey('owner_dob', null, false)
         );
         $this->assertEquals(

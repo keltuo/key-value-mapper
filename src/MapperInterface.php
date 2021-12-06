@@ -5,36 +5,26 @@ namespace KeyValueMapper;
 
 /**
  * Interface MapperInterface
+ *
  * @package KeyValueMapper
  */
 interface MapperInterface
 {
-    const TYPE_ARRAY = 'array';
-    const TYPE_OBJECT = 'object';
-    const TYPE_STRING = 'string';
-    const TYPE_NUMBER = 'number';
-    const TYPE_TIMESTAMP = 'timestamp';
-    const TYPE_DATETIME = 'datetime';
-    const TYPE_DATE = 'date';
-    const TYPE_CUSTOM_DATETIME = 'custom-datetime';
-    /**
-     * @param bool $mapBySourceKey
-     * @return array<string|int|array|bool>
-     */
+    public const TYPE_ARRAY = 'array';
+    public const TYPE_OBJECT = 'object';
+    public const TYPE_STRING = 'string';
+    public const TYPE_NUMBER = 'number';
+    public const TYPE_TIMESTAMP = 'timestamp';
+    public const TYPE_DATETIME = 'datetime';
+    public const TYPE_DATE = 'date';
+    public const TYPE_CUSTOM_DATETIME = 'custom-datetime';
+    public const TYPE_DATETIME_OBJECT = 'datetime-object';
+
     public function getMap(bool $mapBySourceKey = true): array;
 
-    /**
-     * @param string $mapName
-     * @param bool $mapBySourceKey
-     * @return array<string|number|array|bool>
-     */
     public function getList(string $mapName, bool $mapBySourceKey = true): array;
 
-    /**
-     * @param array $data
-     */
-    public function setData(array $data);
+    public function setData(array $data): self;
 
-    /** @return array<string|number|array|bool> */
     public function getMapDataSource(): array;
 }

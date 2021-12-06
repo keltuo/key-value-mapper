@@ -4,21 +4,18 @@ declare(strict_types=1);
 namespace KeyValueMapper\Example\Collection;
 
 use KeyValueMapper\AbstractCollection;
-use KeyValueMapper\Example\Model\Owner;
 use KeyValueMapper\Example\Model\CalculationData as MapperCalculationData;
+use KeyValueMapper\Example\Model\Owner;
 use KeyValueMapper\Example\Model\ReplaceAttribute;
 use KeyValueMapper\KeyValueArrayInterface;
 
 /**
  * Class CalculationData
+ *
  * @package KeyValueMapper\Example\Collection
  */
 class CalculationData extends AbstractCollection
 {
-    /**
-     * @param bool $mapBySourceKey
-     * @return array
-     */
     public function getMap(bool $mapBySourceKey = true): array
     {
         $calculationData = new MapperCalculationData($this->data);
@@ -37,7 +34,7 @@ class CalculationData extends AbstractCollection
             ReplaceAttribute::class,
             'replace',
             $mapBySourceKey,
-            function(KeyValueArrayInterface $class) use ($mapBySourceKey) {
+            static function(KeyValueArrayInterface $class) use ($mapBySourceKey) {
                 $class->setEnabled($mapBySourceKey);
                 return $class;
             }
@@ -46,9 +43,6 @@ class CalculationData extends AbstractCollection
         return parent::getMap($mapBySourceKey);
     }
 
-    /**
-     * @return array
-     */
     public function getMapDataSource(): array
     {
         $this->addCollection(new MapperCalculationData());
