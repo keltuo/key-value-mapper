@@ -255,7 +255,7 @@ abstract class AbstractCollection implements MapperInterface
         array &$dataSource,
         bool $mapBySourceKey,
         string $key,
-        string|array|null &$returnKey,
+        array|bool|int|float|string|null &$returnKey,
     ): void
     {
         if(\array_key_exists($key, $dataSource)) {
