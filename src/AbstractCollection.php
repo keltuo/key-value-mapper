@@ -40,7 +40,7 @@ abstract class AbstractCollection implements MapperInterface
         return $value;
     }
 
-    public function getMappedKey(string $key, bool $mapBySourceKey = true): string
+    public function getMappedKey(string $key, bool $mapBySourceKey = true): array|bool|int|float|string|null
     {
         $dataSource = $this->getMapDataSource();
         $returnKey = $key;
