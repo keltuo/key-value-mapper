@@ -33,12 +33,12 @@ class OwnerModelMapperTest extends BaseTestCase
             'owner_kind' => 1,
             'owner_first_name' => 'first_name value',
             'owner_last_name' => 'last_name value',
-            'owner_dob' => strtotime('2021-01-21'),
+            'owner_dob' => strtotime('2021-02-10'),
             'owner_id' => 'personal_id value',
             'owner_vat' => 'vat value',
             'owner_mail' => 'email value',
             'owner_tel' => 'phone value',
-            'owner_street' => 'street value',
+            'owner_street' => 'street value street_number value zip value',
             'owner_street_nr' => 'street_number value',
             'owner_zip' => 'zip value',
         ];
@@ -107,7 +107,7 @@ class OwnerModelMapperTest extends BaseTestCase
     public function testEscapeValues()
     {
         $this->assertEquals(
-            1611183600,
+            1612911600,
             $this->mapperFromSource->getValueByKey('owner_dob', null, false)
         );
         $this->assertEquals(

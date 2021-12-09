@@ -57,4 +57,21 @@ class Owner extends AbstractMapper
         'COMPANY' => 2,
         'SELF_EMPLOYED' => 3,
     ];
+
+    /**
+     * Method mapping value with some another logic
+     * example: load from CSV by ID, or from DB ? :)
+     */
+    protected function mapStreet(array $data): string
+    {
+        return \sprintf('%s %s %s', $data['street'], $data['street_number'], $data['zip']);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    protected function mapDateOfBirth(array $data): string
+    {
+        return (new \Datetime($data['date_of_birth']))->modify('+20days')->format('Y-m-d');
+    }
 }
