@@ -66,4 +66,3 @@ class ReplaceAttribute extends AbstractMapper implements KeyValueArrayInterface
         return $this;
     }
 }
-

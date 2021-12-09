@@ -34,7 +34,7 @@ class CalculationData extends AbstractCollection
             ReplaceAttribute::class,
             'replace',
             $mapBySourceKey,
-            static function(KeyValueArrayInterface $class) use ($mapBySourceKey) {
+            static function (KeyValueArrayInterface $class) use ($mapBySourceKey) {
                 $class->setEnabled($mapBySourceKey);
                 return $class;
             }

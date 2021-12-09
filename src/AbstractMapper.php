@@ -64,19 +64,16 @@ abstract class AbstractMapper implements MapperInterface
                 }
             }
         } catch (\ReflectionException) {
-
         }
 
         return $outputList;
-
     }
 
     public function getValueByKey(
         string $key,
         array|bool|int|float|string|null $default = null,
         bool $mapBySourceKey = true,
-    ): array|bool|int|float|string|null
-    {
+    ): array|bool|int|float|string|null {
         $value = $default;
 
         if (\array_key_exists($key, $this->getMap(!$mapBySourceKey))) {
@@ -210,8 +207,7 @@ abstract class AbstractMapper implements MapperInterface
     protected function escapeValue(
         string $value,
         string $type = MapperInterface::TYPE_STRING,
-    ): false|int|float|string|null|\DateTime
-    {
+    ): false|int|float|string|null|\DateTime {
         switch ($type) {
             case MapperInterface::TYPE_TIMESTAMP:
                 return (int)\strtotime($value);
@@ -219,9 +215,14 @@ abstract class AbstractMapper implements MapperInterface
             case MapperInterface::TYPE_DATE:
             case MapperInterface::TYPE_DATETIME:
             case MapperInterface::TYPE_CUSTOM_DATETIME:
-                if (empty($value)) return null;
+                if (empty($value)) {
+                    return null;
+                }
 
-                if (!\is_numeric($value)) $value = \strtotime($value);
+                if (!\is_numeric($value)) {
+                    $value = \strtotime($value);
+                }
+
                 return (new \DateTime())
                     ->setTimestamp((int)$value)
                     ->format($this->getDatetimeFormat($type));
