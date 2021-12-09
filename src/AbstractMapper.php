@@ -176,8 +176,14 @@ abstract class AbstractMapper implements MapperInterface
                         }
                     }
                 } else {
+                    $value = \is_array($this->data[$searchKey]) ? '' : $this->data[$searchKey];
+
+                    if ($mapBySourceKey && $ref->hasMethod($mapProperty)) {
+                        $value = \strval($this->{$mapProperty}($this->data));
+                        $out[$mapKey] = $value;
+                    }
+
                     if ($ref->hasProperty((string)$mapKey)) {
-                        $value = \is_array($this->data[$searchKey]) ? '' : $this->data[$searchKey];
                         $out[$mapKey] = $this->escapeValue(
                             (string)$value,
                             (string)$this->{$mapKey}

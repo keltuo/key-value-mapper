@@ -32,8 +32,7 @@ abstract class AbstractCollection implements MapperInterface
         string $key,
         array|bool|int|float|string|null $default = null,
         bool $mapBySourceKey = true,
-    ): array|bool|int|float|string|null
-    {
+    ): array|bool|int|float|string|null {
         $value = $default;
         $dataSource = $this->getMap(!$mapBySourceKey);
         $this->getKeyFromArray($dataSource, !$mapBySourceKey, $key, $value);
@@ -137,8 +136,7 @@ abstract class AbstractCollection implements MapperInterface
         MapperInterface $collection,
         ?string $key = null,
         string $type = MapperInterface::TYPE_ARRAY,
-    ): AbstractCollection
-    {
+    ): AbstractCollection {
         if (\is_null($key)) {
             $this->collections[] = $collection;
         } else {
@@ -162,8 +160,7 @@ abstract class AbstractCollection implements MapperInterface
         string $mappedKey,
         bool $byMapKey = true,
         ?\Closure $classCallback = null,
-    ): AbstractCollection
-    {
+    ): AbstractCollection {
         $sourceKey = $mapper->getSourceKey($mappedKey, $byMapKey);
         $targetKey = $mapper->getTargetKey($mappedKey, $byMapKey);
 
@@ -256,22 +253,22 @@ abstract class AbstractCollection implements MapperInterface
         bool $mapBySourceKey,
         string $key,
         array|bool|int|float|string|null &$returnKey,
-    ): void
-    {
-        if(\array_key_exists($key, $dataSource)) {
+    ): void {
+        if (\array_key_exists($key, $dataSource)) {
             $returnKey = $dataSource[$key];
         } else {
             try {
                 \array_walk_recursive(
                     $dataSource,
                     static function ($dataSourceItem, $dataSourceKey) use ($mapBySourceKey, $key, &$returnKey): void {
-                        if ($mapBySourceKey && $dataSourceKey === $key) {
+                        if ($mapBySourceKey
+                            && $dataSourceKey === $key
+                        ) {
                             $returnKey = $dataSourceItem;
                             throw new MatchFoundException('I found him');
-                        } else
+                        }
 
-                            if (
-                            !$mapBySourceKey
+                        if (!$mapBySourceKey
                             && $dataSourceItem === $key
                         ) {
                             $returnKey = $dataSourceKey;
@@ -281,7 +278,6 @@ abstract class AbstractCollection implements MapperInterface
                     $returnKey
                 );
             } catch (MatchFoundException) {
-
             }
         }
     }
