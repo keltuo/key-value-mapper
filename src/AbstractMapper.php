@@ -12,6 +12,8 @@ use function Symfony\Component\String\u;
  */
 abstract class AbstractMapper implements MapperInterface
 {
+    protected array $mapByMapperClass = [];
+    protected array $constantValues = [];
     protected array $defaultValues = [];
     protected string $customFormatDatetime = 'Y-m-d H:i:s';
     protected array $data = [];
@@ -22,9 +24,35 @@ abstract class AbstractMapper implements MapperInterface
         $this->data = $data;
     }
 
+    public function getMapper(string $mapperClass, array $data = [], array $properties = []): AbstractMapper
+    {
+        return MapperFactory::createMapper($mapperClass, $data, $properties);
+    }
+
+    public function insertProperties(): array
+    {
+        return [];
+    }
+
     public function getMap(bool $mapBySourceKey = true): array
     {
-        return $this->createMap($mapBySourceKey);
+        $data = $this->createMap($mapBySourceKey);
+
+        foreach ($this->mapByMapperClass as $key => $value) {
+            if (!\is_string($value) || !\class_exists($value)) {
+                continue;
+            }
+
+            $data[$key] = $this->getMapper($value, $this->data)->getMap($mapBySourceKey);
+        }
+
+        if ($mapBySourceKey === true && \count($this->constantValues)) {
+            foreach ($this->constantValues as $key => $value) {
+                $data[$key] = $value;
+            }
+        }
+
+        return $data;
     }
 
     public function getMapFromSource(): array
@@ -129,6 +157,20 @@ abstract class AbstractMapper implements MapperInterface
     public function setDefaultValues(array $defaultValues): self
     {
         $this->defaultValues = $defaultValues;
+        return $this;
+    }
+
+    public function setConstantValues(array $constantValues): self
+    {
+        $this->constantValues = $constantValues;
+
+        return $this;
+    }
+
+    public function setMapByMapperClasses(array $mapByMapperClasses): self
+    {
+        $this->mapByMapperClass = $mapByMapperClasses;
+
         return $this;
     }
 

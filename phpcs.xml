@@ -3,6 +3,7 @@
     <config name="installed_paths" value="./vendor/slevomat/coding-standard"/>
     <arg name="extensions" value="php"/>
     <file>src/</file>
+    <file>tests/</file>
     <arg name="basepath" value="."/>
     <arg name="colors"/>
     <arg name="parallel" value="75"/>
@@ -55,6 +56,8 @@
         <exclude name="SlevomatCodingStandard.Operators.DisallowIncrementAndDecrementOperators"/>
         <exclude name="SlevomatCodingStandard.PHP.DisallowReference"/>
         <exclude name="SlevomatCodingStandard.PHP.RequireExplicitAssertion"/>
+        <exclude name="SlevomatCodingStandard.Classes.RequireAbstractOrFinal"/>
+        <exclude name="SlevomatCodingStandard.Exceptions.DisallowNonCapturingCatch"/>
     </rule>
     <rule ref="SlevomatCodingStandard.Arrays.TrailingArrayComma"/>
     <rule ref="SlevomatCodingStandard.Classes.EmptyLinesAroundClassBraces">
