@@ -8,26 +8,31 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class BaseTestCase
+ *
  * @package KeyValueMapper\Tests
  */
 class BaseTestCase extends TestCase
 {
-    /** @var MapperInterface */
     protected MapperInterface $mapperFromSource;
-    /** @var MapperInterface  */
+
     protected MapperInterface $mapperFromTarget;
-    /** @var array  */
+
+    /** @var array */
     protected array $sourceData = [];
-    /** @var array  */
+
+    /** @var array */
     protected array $targetData = [];
-    /** @var array  */
+
+    /** @var array */
     protected array $defaultExpectedMapSource = [];
-    /** @var array  */
+
+    /** @var array */
     protected array $defaultExpectedMapTarget = [];
 
     protected function setUp(): void
     {
         parent::setUp();
+
         /** Default Source keys */
         $this->sourceData = [
             'insurance_company' => 'insurance_company value',
@@ -51,18 +56,18 @@ class BaseTestCase extends TestCase
             'replace' => [
                 ['name' => 'key_name', 'value' => 'key value'],
                 ['name' => 'key_name1', 'value' => 'key value 1'],
-            ]
+            ],
         ];
         $this->defaultExpectedMapSource = [
             'ins' => 'insurance_company value',
             'calc_type' => 'calculation_type value',
             'payment' => 'payment_frequency value',
             'insurance' => 'type1',
-            'ins_start_date' => strtotime('2021-01-21'),
+            'ins_start_date' => \strtotime('2021-01-21'),
             'owner_kind' => 1,
             'owner_first_name' => 'first_name value',
             'owner_last_name' => 'last_name value',
-            'owner_dob' => strtotime('2021-02-10'),
+            'owner_dob' => \strtotime('2021-02-10'),
             'owner_id' => 'personal_id value',
             'owner_vat' => 'vat value',
             'owner_mail' => 'email value',
@@ -73,7 +78,7 @@ class BaseTestCase extends TestCase
             'substitution_data' => [
                 'key_name' => 'key value',
                 'key_name1' => 'key value 1',
-            ]
+            ],
         ];
 
         /** Default Target keys */
@@ -82,11 +87,11 @@ class BaseTestCase extends TestCase
             'calc_type' => 'calc_type value',
             'payment' => 'payment value',
             'insurance' => 'type_calculation_1',
-            'ins_start_date' => strtotime('2021-01-21'),
+            'ins_start_date' => \strtotime('2021-01-21'),
             'owner_kind' => 1,
             'owner_first_name' => 'owner_first_name value',
             'owner_last_name' => 'owner_last_name value',
-            'owner_dob' => strtotime('2021-01-21'),
+            'owner_dob' => \strtotime('2021-01-21'),
             'owner_id' => 'owner_id value',
             'owner_vat' => 'owner_vat value',
             'owner_mail' => 'owner_mail value',
